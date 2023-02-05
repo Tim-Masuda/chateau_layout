@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:chateau_mobile_homescreen/chateau_icons.dart';
 import 'package:chateau_mobile_homescreen/models/message_data.dart';
 import 'package:chateau_mobile_homescreen/scale.dart';
 import 'package:chateau_mobile_homescreen/theme.dart';
@@ -63,8 +66,8 @@ class MessageScreen extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.only(left: 16.0) * context.sc,
           child: IconButton(
-            iconSize: 26.0,
-            icon: const Icon(CupertinoIcons.back),
+            iconSize: 16.0 * context.sc,
+            icon: const Icon(ChateauIcons.navigate_back),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -75,7 +78,8 @@ class MessageScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 18) * context.sc,
             child: const Avatar.medium(
-              url: 'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+              url:
+                  'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
             ),
           )
         ],
@@ -168,12 +172,14 @@ class _MessageList extends StatelessWidget {
               SizedBox(
                 height: 16 * context.sc,
               ),
-              ..._testData.map((e) => _MessageTile(message: e)).expand((element) => [
-                    element,
-                    SizedBox(
-                      height: 12 * context.sc,
-                    )
-                  ]),
+              ..._testData
+                  .map((e) => _MessageTile(message: e))
+                  .expand((element) => [
+                        element,
+                        SizedBox(
+                          height: 12 * context.sc,
+                        )
+                      ]),
               SizedBox(
                 height: 16 * context.sc,
               ),
@@ -183,12 +189,14 @@ class _MessageList extends StatelessWidget {
               SizedBox(
                 height: 16 * context.sc,
               ),
-              ..._testData.map((e) => _MessageTile(message: e)).expand((element) => [
-                    element,
-                    SizedBox(
-                      height: 12 * context.sc,
-                    )
-                  ]),
+              ..._testData
+                  .map((e) => _MessageTile(message: e))
+                  .expand((element) => [
+                        element,
+                        SizedBox(
+                          height: 12 * context.sc,
+                        )
+                      ]),
               SizedBox(
                 height: 16 * context.sc,
               ),
@@ -198,12 +206,14 @@ class _MessageList extends StatelessWidget {
               SizedBox(
                 height: 16 * context.sc,
               ),
-              ..._testData.map((e) => _MessageTile(message: e)).expand((element) => [
-                    element,
-                    SizedBox(
-                      height: 12 * context.sc,
-                    )
-                  ]),
+              ..._testData
+                  .map((e) => _MessageTile(message: e))
+                  .expand((element) => [
+                        element,
+                        SizedBox(
+                          height: 12 * context.sc,
+                        )
+                      ]),
               SizedBox(
                 height: 100 * context.sc,
               ),
@@ -243,7 +253,8 @@ class _MessageTile extends StatelessWidget {
 
   bool get isSelf => message.isSelf;
 
-  AlignmentGeometry get alignment => isSelf ? Alignment.centerRight : Alignment.centerLeft;
+  AlignmentGeometry get alignment =>
+      isSelf ? Alignment.centerRight : Alignment.centerLeft;
 
   @override
   Widget build(BuildContext context) {
@@ -334,79 +345,148 @@ class _InputBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: SafeArea(
-            child: Row(
-              children: [
-                // Icon clip
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(17) * context.sc,
-                    color: const Color.fromRGBO(54, 49, 74, 1),
-                  ),
-                  height: 52 * context.sc,
-                  width: 52 * context.sc,
-                  child: IconButton(
-                    icon: const Icon(
-                      CupertinoIcons.paperclip,
-                      size: 25,
-                    ),
-                    onPressed: () {},
-                  ),
-                ),
-                // Icon clip
-                SizedBox(
-                  width: 10 * context.sc,
-                ),
-                Expanded(
-                  child: Container(
-                    height: 55 * context.sc,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: const Color.fromRGBO(90, 77, 135, 1)),
-                        borderRadius: BorderRadius.circular(16) * context.sc,
-                        color: const Color.fromRGBO(7, 2, 28, 1)),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 20 * context.sc,
-                        ),
-                        const Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              // хз как задать размео хинту надо будет чекнуть
-                              hintText: "Message",
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15) * context.sc,
-                            color: const Color.fromRGBO(237, 251, 139, 1),
-                          ),
-                          height: 47 * context.sc,
-                          width: 47 * context.sc,
-                          child: IconButton(
-                            icon: const Icon(Icons.send),
-                            color: Colors.black,
-                            onPressed: () {},
-                          ),
-                        ),
-                        SizedBox(
-                          width: 3 * context.sc,
-                        )
-                      ],
-                    ),
-                  ),
-                )
-              ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16) * context.sc,
+      child: Row(
+        children: [
+          const _AttachButton(),
+          SizedBox(
+            width: 10 * context.sc,
+          ),
+          TextField(
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.only(
+                      left: 16, bottom: 14, top: 14, right: 8) *
+                  context.sc,
+              border: OutlineInputBorder(
+                borderSide:
+                    const BorderSide(color: Color.fromRGBO(90, 77, 135, 1)),
+                borderRadius:
+                    BorderRadius.all(const Radius.circular(16) * context.sc),
+              ),
             ),
           ),
-        )
-      ],
+          // Expanded(
+          //   child: Container(
+          //     height: 55 * context.sc,
+          //     decoration: BoxDecoration(
+          //         border: Border.all(color: const Color.fromRGBO(90, 77, 135, 1)),
+          //         borderRadius: BorderRadius.circular(16) * context.sc,
+          //         color: const Color.fromRGBO(7, 2, 28, 1)),
+          //     child: Row(
+          //       children: [
+          //         SizedBox(
+          //           width: 20 * context.sc,
+          //         ),
+          //         const Expanded(
+          //           child: TextField(
+          //             decoration: InputDecoration(
+          //               // размер
+          //               hintText: "Message",
+          //               border: InputBorder.none,
+          //             ),
+          //           ),
+          //         ),
+          //         IconButton(
+          //           onPressed: () {},
+          //           icon: Container(
+          //             padding: const EdgeInsets.all(11) * context.sc,
+          //             decoration: BoxDecoration(
+          //               borderRadius: BorderRadius.circular(13) * context.sc,
+          //               color: const Color.fromRGBO(237, 251, 139, 1),
+          //             ),
+          //             child: Icon(
+          //               ChateauIcons.send,
+          //               size: 18 * context.sc,
+          //               color: Colors.black,
+          //             ),
+          //           ),
+          //         ),
+          //         SizedBox(
+          //           width: 3 * context.sc,
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // )
+        ],
+      ),
+    );
+  }
+}
+
+class _AttachButton extends StatelessWidget {
+  const _AttachButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStatePropertyAll<Color>(
+          const Color.fromRGBO(54, 49, 74, 1),
+        ),
+        padding: MaterialStatePropertyAll<EdgeInsets>(
+          const EdgeInsets.all(11) * context.sc,
+        ),
+        shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16) * context.sc,
+          ),
+        ),
+      ),
+      onPressed: () {},
+      child: Icon(
+        ChateauIcons.attach,
+        size: 24 * context.sc,
+        color: Colors.white,
+      ),
+    );
+  }
+}
+
+class _SquareIconButton extends StatelessWidget {
+  const _SquareIconButton({
+    Key? key,
+    required this.backgroundColor,
+    this.padding = 11,
+    required this.radius,
+    required this.icon,
+    required this.iconTheme
+  }) : super(key: key);
+
+  final Color backgroundColor;
+
+  final double padding;
+
+  final double radius;
+
+  final IconData icon;
+
+  final IconThemeData iconTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStatePropertyAll<Color>(backgroundColor),
+        padding: MaterialStatePropertyAll<EdgeInsets>(
+          EdgeInsets.all(padding) * context.sc,
+        ),
+        shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(radius) * context.sc,
+          ),
+        ),
+      ),
+      onPressed: () {},
+      child: IconTheme(
+        data: iconTheme,
+        child: Icon(
+          icon,
+        ),
+      ),
     );
   }
 }

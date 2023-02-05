@@ -44,11 +44,13 @@ class _HomeScreenState extends State<HomeScreen> {
         title: ValueListenableBuilder(
           valueListenable: titleBar,
           builder: (BuildContext context, String value, _) {
-            return Text(titleBar.value,
-                style: TextStyle(
-                  fontSize: 23 * context.sc,
-                  fontWeight: FontWeight.w500,
-                ));
+            return Text(
+              titleBar.value,
+              style: const TextStyle(
+                fontSize: 23,
+                fontWeight: FontWeight.w500,
+              ),
+            );
           },
         ),
         leading: Padding(
