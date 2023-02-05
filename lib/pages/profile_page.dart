@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfilePage extends StatelessWidget {
 const ProfilePage({ Key? key }) : super(key: key);
@@ -7,7 +8,7 @@ const ProfilePage({ Key? key }) : super(key: key);
   Widget build(BuildContext context){
     return Center(
       child: Container(
-        child: Text("ProfilePage"),
+        child: Text("ProfilePage", style: TextStyle(fontSize: 30.sp),),
       ),
     );
   }

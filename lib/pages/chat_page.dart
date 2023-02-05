@@ -4,6 +4,7 @@ import 'package:chateau_mobile_homescreen/theme.dart';
 import 'package:chateau_mobile_homescreen/widgets/avatar.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jiffy/jiffy.dart';
 
 class ChatPage extends StatelessWidget {
@@ -46,18 +47,18 @@ class MessageBloc extends StatelessWidget {
         Navigator.of(context).push(MessageScreen.route(messageData));
       },
       child: SizedBox(
-        height: 87,
+        height: 80.h,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Avatar.large(
                 url:
                     "https://cdn.discordapp.com/attachments/1004867968271908974/1037045682193846282/unknown.png",
               ),
-              const SizedBox(
-                width: 8,
+              SizedBox(
+                width: 8.w,
               ),
               Expanded(
                 child: Column(
@@ -65,18 +66,18 @@ class MessageBloc extends StatelessWidget {
                   children: [
                     Text(
                       messageData.senderName,
-                      style: const TextStyle(
+                      style: TextStyle(
                         overflow: TextOverflow.ellipsis,
-                        fontSize: 19,
+                        fontSize: 19.sp,
                         fontWeight: FontWeight.w500,
                         letterSpacing: -0.3,
                       ),
                     ),
                     Text(
                       messageData.message,
-                      style: const TextStyle(
+                      style: TextStyle(
                         overflow: TextOverflow.ellipsis,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         color: BaseColors.textDark,
                         fontWeight: FontWeight.w400,
                       ),
@@ -89,8 +90,8 @@ class MessageBloc extends StatelessWidget {
                 children: [
                   Text(
                     messageData.dateMessage.toUpperCase(),
-                    style: const TextStyle(
-                      fontSize: 11,
+                    style: TextStyle(
+                      fontSize: 11.sp,
                       letterSpacing: -0.2,
                       fontWeight: FontWeight.w600,
                       color: BaseColors.textDark,
@@ -108,10 +109,10 @@ class MessageBloc extends StatelessWidget {
                       color: BaseColors.textLigth,
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
-                    child: const Text(
+                    child: Text(
                       '1',
                       style: TextStyle(
-                        fontSize: 10,
+                        fontSize: 10.sp,
                         color: Colors.black,
                       ),
                     ),
@@ -128,85 +129,3 @@ class MessageBloc extends StatelessWidget {
     );
   }
 }
-
-
-/*
-child: Row(children: [
-          const Padding(
-            padding: EdgeInsets.all(10),
-            child: Avatar.large(
-              url:
-                "https://cdn.discordapp.com/attachments/1004867968271908974/1037045682193846282/unknown.png",
-            ),
-          ),
-          Expanded(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 3),
-                child: Text(
-                  messageData.senderName,
-                  style: const TextStyle(
-                      overflow: TextOverflow.ellipsis,
-                      fontSize: 19,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: -0.3),
-                ),
-              ),
-              SizedBox(
-                height: 40,
-                child: Text(
-                  messageData.message,
-                  style: const TextStyle(
-                    overflow: TextOverflow.ellipsis,
-                    fontSize: 16,
-                    color: BaseColors.textDark,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              )
-            ],
-          )),
-          Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Text(
-                      messageData.dateMessage.toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 11,
-                        letterSpacing: -0.2,
-                        fontWeight: FontWeight.w600,
-                        color: BaseColors.textDark,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Container(
-                      width: 18,
-                      height: 18,
-                      decoration: const BoxDecoration(
-                        color: BaseColors.textLigth,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Center(
-                        child: Text(
-                          '1',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    )
-                  ]))
-        ]),
-*/

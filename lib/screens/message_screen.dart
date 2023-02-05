@@ -3,6 +3,7 @@ import 'package:chateau_mobile_homescreen/theme.dart';
 import 'package:chateau_mobile_homescreen/widgets/avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 const _testData = [
   Message(
@@ -53,7 +54,7 @@ class MessageScreen extends StatelessWidget {
       appBar: AppBar(
         bottomOpacity: 0.0,
         elevation: 0.0,
-        toolbarHeight: 85,
+        toolbarHeight: 85.h,
         backgroundColor: BaseColors.secondary,
         centerTitle: true,
         title: _AppBarTitle(
@@ -62,7 +63,7 @@ class MessageScreen extends StatelessWidget {
         leading: Padding(
           padding: EdgeInsets.only(left: 16.0),
           child: IconButton(
-            iconSize: 26.0,
+            iconSize: 26.0.sp,
             icon: const Icon(CupertinoIcons.back),
             onPressed: () {
               Navigator.of(context).pop();
@@ -70,9 +71,9 @@ class MessageScreen extends StatelessWidget {
             // size: 27,
           ),
         ),
-        actions: const [
+        actions:  [
           Padding(
-            padding: EdgeInsets.only(right: 18),
+            padding: EdgeInsets.only(right: 18).r,
             child: Avatar.medium(
               url:
                   'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
@@ -110,13 +111,13 @@ class _AppBarTitle extends StatelessWidget {
               Text(
                 messageData.senderName,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 19),
+                style: TextStyle(fontSize: 19.sp),
               ),
-              const SizedBox(height: 2),
-              const Text(
+              SizedBox(height: 2.w),
+              Text(
                 'Online now',
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
                   color: BaseColors.pink,
                 ),
@@ -137,7 +138,7 @@ class _MessageList extends StatelessWidget {
     return ColoredBox(
       color: BaseColors.secondary,
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/chat_background.png'),
             fit: BoxFit.contain,
@@ -153,53 +154,53 @@ class _MessageList extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: ListView(
             children: [
-              const SizedBox(
-                height: 16,
+              SizedBox(
+                height: 16.h,
               ),
-              const _DateLable(lable: '6 October '),
-              const SizedBox(
-                height: 16,
-              ),
-              ..._testData
-                  .map((e) => _MessageTile(message: e))
-                  .expand((element) => [
-                        element,
-                        const SizedBox(
-                          height: 12,
-                        )
-                      ]),
-              const SizedBox(
-                height: 16,
-              ),
-              const _DateLable(lable: '6 October '),
-              const SizedBox(
-                height: 16,
+              _DateLable(lable: '6 October '),
+              SizedBox(
+                height: 16.h,
               ),
               ..._testData
                   .map((e) => _MessageTile(message: e))
                   .expand((element) => [
                         element,
-                        const SizedBox(
-                          height: 12,
+                        SizedBox(
+                          height: 12.h,
                         )
                       ]),
-              const SizedBox(
-                height: 16,
+              SizedBox(
+                height: 16.h,
               ),
-              const _DateLable(lable: '6 October '),
-              const SizedBox(
-                height: 16,
+              _DateLable(lable: '6 October '),
+              SizedBox(
+                height: 16.h,
               ),
               ..._testData
                   .map((e) => _MessageTile(message: e))
                   .expand((element) => [
                         element,
-                        const SizedBox(
-                          height: 12,
+                        SizedBox(
+                          height: 12.h,
                         )
                       ]),
-              const SizedBox(
-                height: 100,
+              SizedBox(
+                height: 16.h,
+              ),
+              _DateLable(lable: '6 October '),
+              SizedBox(
+                height: 16.h,
+              ),
+              ..._testData
+                  .map((e) => _MessageTile(message: e))
+                  .expand((element) => [
+                        element,
+                        SizedBox(
+                          height: 12.h,
+                        )
+                      ]),
+              SizedBox(
+                height: 100.h,
               ),
             ],
           ),
@@ -270,13 +271,13 @@ class _MessageTile extends StatelessWidget {
                 ),
                 child: Text(
                   content,
-                  style: const TextStyle(
-                    fontSize: 15,
+                  style: TextStyle(
+                    fontSize: 15.sp,
                   ),
                 ),
               ),
-              const SizedBox(
-                width: 4,
+              SizedBox(
+                width: 4.w,
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -285,9 +286,9 @@ class _MessageTile extends StatelessWidget {
                 ),
                 child: Text(
                   messageDate,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: BaseColors.textDark,
-                    fontSize: 11,
+                    fontSize: 11.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -316,8 +317,8 @@ class _DateLable extends StatelessWidget {
     return Text(
       lable,
       textAlign: TextAlign.center,
-      style: const TextStyle(
-        fontSize: 12,
+      style: TextStyle(
+        fontSize: 12.sp,
         fontWeight: FontWeight.bold,
         color: BaseColors.textDark,
       ),
@@ -340,49 +341,50 @@ class _InputBar extends StatelessWidget {
                 // Icon clip
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(17),
+                    borderRadius: BorderRadius.circular(17).w,
                     color: Color.fromRGBO(54, 49, 74, 1),
                   ),
-                  height: 52,
-                  width: 52,
+                  height: 52.h,
+                  width: 52.w,
                   child: IconButton(
                     icon: Icon(
                       CupertinoIcons.paperclip,
-                      size: 25,
+                      size: 25.sp,
                     ),
                     onPressed: () {},
                   ),
                 ),
                 // Icon clip
-                const SizedBox(
-                  width: 10,
+                SizedBox(
+                  width: 10.w,
                 ),
                 Expanded(
                   child: Container(
-                    height: 55,
+                    height: 55.h,
                     decoration: BoxDecoration(
                       border: Border.all(color: Color.fromRGBO(90, 77, 135, 1)),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(16).w,
                       color: Color.fromRGBO(7, 2, 28, 1)
                     ),
                     child: Row(
                       children: [
-                        SizedBox(width: 20),
-                        Expanded(
+                        SizedBox(width: 20.w),
+                        const Expanded(
                           child: TextField(
                             decoration: InputDecoration(
-                              hintText: "Message",
+                              // хз как задать размео хинту надо будет чекнуть
+                              hintText: "Message", 
                               border: InputBorder.none,
                             ),
                           ),
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(15).w,
                             color: Color.fromRGBO(237, 251, 139, 1),
                           ),
-                          height: 47,
-                          width: 47,
+                          height: 47.h,
+                          width: 47.w,
                           child: IconButton(
                             icon: Icon(Icons.send),
                             color: Colors.black,
@@ -390,7 +392,7 @@ class _InputBar extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          width: 3,
+                          width: 3.w,
                         )
                       ],
                     ),

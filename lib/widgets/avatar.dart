@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Avatar extends StatelessWidget {
   const Avatar({
@@ -23,7 +24,7 @@ class Avatar extends StatelessWidget {
   const Avatar.large({
     Key? key,
     required this.url,
-  })  : radius = 33,
+  })  : radius = 30,
         super(key: key);
 
   final double radius;
@@ -32,7 +33,7 @@ class Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: radius,
+      radius: radius.sp,
       backgroundImage: CachedNetworkImageProvider(url),
       backgroundColor: Theme.of(context).cardColor,
     );
