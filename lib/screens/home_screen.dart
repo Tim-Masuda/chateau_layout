@@ -2,10 +2,9 @@ import 'package:chateau_mobile_homescreen/chateau_icons.dart';
 import 'package:chateau_mobile_homescreen/pages/apps_page.dart';
 import 'package:chateau_mobile_homescreen/pages/chat_page.dart';
 import 'package:chateau_mobile_homescreen/pages/profile_page.dart';
+import 'package:chateau_mobile_homescreen/scale.dart';
 import 'package:chateau_mobile_homescreen/theme.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -39,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 70.h,
+        toolbarHeight: 70 * context.sc,
         backgroundColor: BaseColors.secondary,
         centerTitle: true,
         title: ValueListenableBuilder(
@@ -47,28 +46,28 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (BuildContext context, String value, _) {
             return Text(titleBar.value,
                 style: TextStyle(
-                  fontSize: 23.sp,
+                  fontSize: 23 * context.sc,
                   fontWeight: FontWeight.w500,
                 ));
           },
         ),
         leading: Padding(
-          padding: EdgeInsets.only(left: 16.0).r,
+          padding: const EdgeInsets.only(left: 16.0) * context.sc,
           child: IconButton(
             icon: Icon(
               ChateauIcons.add,
-              size: 20.sp,
+              size: 20 * context.sc,
             ),
             onPressed: () {},
           ),
         ),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 12.r),
+            padding: const EdgeInsets.only(right: 12) * context.sc,
             child: IconButton(
               icon: Icon(
                 ChateauIcons.search,
-                size: 20.sp,
+                size: 20 * context.sc,
               ),
               onPressed: () {},
             ),
@@ -115,17 +114,15 @@ class _BottomNavigationBarState extends State<_BottomNavigationBar> {
         child: BottomNavigationBar(
           selectedItemColor: BaseColors.textLigth,
           unselectedItemColor: BaseColors.textDark,
-          // showSelectedLabels: true,
-          // enableFeedback: false,
           currentIndex: selectedIndex,
           onTap: selectItem,
-          selectedIconTheme: IconThemeData(
+          selectedIconTheme: const IconThemeData(
             color: BaseColors.textLigth,
-            size: 26.sp,
+            size: 26,
           ),
-          unselectedIconTheme: IconThemeData(
+          unselectedIconTheme: const IconThemeData(
             color: BaseColors.textDark,
-            size: 26.sp,
+            size: 26,
           ),
           selectedLabelStyle: const TextStyle(
             color: BaseColors.textLigth,
@@ -133,8 +130,8 @@ class _BottomNavigationBarState extends State<_BottomNavigationBar> {
           unselectedLabelStyle: const TextStyle(
             color: BaseColors.textDark,
           ),
-          selectedFontSize: 10.sp,
-          unselectedFontSize: 10.sp,
+          selectedFontSize: 10,
+          unselectedFontSize: 10,
           backgroundColor: BaseColors.secondary,
           landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
           items: const [

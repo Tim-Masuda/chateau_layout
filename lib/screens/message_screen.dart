@@ -1,9 +1,9 @@
 import 'package:chateau_mobile_homescreen/models/message_data.dart';
+import 'package:chateau_mobile_homescreen/scale.dart';
 import 'package:chateau_mobile_homescreen/theme.dart';
 import 'package:chateau_mobile_homescreen/widgets/avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 const _testData = [
   Message(
@@ -54,16 +54,16 @@ class MessageScreen extends StatelessWidget {
       appBar: AppBar(
         bottomOpacity: 0.0,
         elevation: 0.0,
-        toolbarHeight: 85.h,
+        toolbarHeight: 85 * context.sc,
         backgroundColor: BaseColors.secondary,
         centerTitle: true,
         title: _AppBarTitle(
           messageData: messageData,
         ),
         leading: Padding(
-          padding: EdgeInsets.only(left: 16.0),
+          padding: const EdgeInsets.only(left: 16.0) * context.sc,
           child: IconButton(
-            iconSize: 26.0.sp,
+            iconSize: 26.0,
             icon: const Icon(CupertinoIcons.back),
             onPressed: () {
               Navigator.of(context).pop();
@@ -71,20 +71,23 @@ class MessageScreen extends StatelessWidget {
             // size: 27,
           ),
         ),
-        actions:  [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 18).r,
-            child: Avatar.medium(
-              url:
-                  'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+            padding: const EdgeInsets.only(right: 18) * context.sc,
+            child: const Avatar.medium(
+              url: 'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
             ),
           )
         ],
       ),
       body: Stack(
         children: [
-          _MessageList(),
-          Positioned(width: MediaQuery.of(context).size.width, bottom: 0, child: _InputBar()),
+          const _MessageList(),
+          Positioned(
+            width: MediaQuery.of(context).size.width,
+            bottom: 0,
+            child: const _InputBar(),
+          ),
         ],
       ),
     );
@@ -111,13 +114,15 @@ class _AppBarTitle extends StatelessWidget {
               Text(
                 messageData.senderName,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 19.sp),
+                style: const TextStyle(
+                  fontSize: 19,
+                ),
               ),
-              SizedBox(height: 2.w),
-              Text(
+              SizedBox(height: 2 * context.sc),
+              const Text(
                 'Online now',
                 style: TextStyle(
-                  fontSize: 12.sp,
+                  fontSize: 12,
                   fontWeight: FontWeight.bold,
                   color: BaseColors.pink,
                 ),
@@ -138,7 +143,7 @@ class _MessageList extends StatelessWidget {
     return ColoredBox(
       color: BaseColors.secondary,
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/chat_background.png'),
             fit: BoxFit.contain,
@@ -155,52 +160,52 @@ class _MessageList extends StatelessWidget {
           child: ListView(
             children: [
               SizedBox(
-                height: 16.h,
+                height: 16 * context.sc,
               ),
-              _DateLable(lable: '6 October '),
-              SizedBox(
-                height: 16.h,
+              const _DateLable(
+                lable: '6 October ',
               ),
-              ..._testData
-                  .map((e) => _MessageTile(message: e))
-                  .expand((element) => [
-                        element,
-                        SizedBox(
-                          height: 12.h,
-                        )
-                      ]),
               SizedBox(
-                height: 16.h,
+                height: 16 * context.sc,
               ),
-              _DateLable(lable: '6 October '),
+              ..._testData.map((e) => _MessageTile(message: e)).expand((element) => [
+                    element,
+                    SizedBox(
+                      height: 12 * context.sc,
+                    )
+                  ]),
               SizedBox(
-                height: 16.h,
+                height: 16 * context.sc,
               ),
-              ..._testData
-                  .map((e) => _MessageTile(message: e))
-                  .expand((element) => [
-                        element,
-                        SizedBox(
-                          height: 12.h,
-                        )
-                      ]),
-              SizedBox(
-                height: 16.h,
+              const _DateLable(
+                lable: '6 October ',
               ),
-              _DateLable(lable: '6 October '),
               SizedBox(
-                height: 16.h,
+                height: 16 * context.sc,
               ),
-              ..._testData
-                  .map((e) => _MessageTile(message: e))
-                  .expand((element) => [
-                        element,
-                        SizedBox(
-                          height: 12.h,
-                        )
-                      ]),
+              ..._testData.map((e) => _MessageTile(message: e)).expand((element) => [
+                    element,
+                    SizedBox(
+                      height: 12 * context.sc,
+                    )
+                  ]),
               SizedBox(
-                height: 100.h,
+                height: 16 * context.sc,
+              ),
+              const _DateLable(
+                lable: '6 October ',
+              ),
+              SizedBox(
+                height: 16 * context.sc,
+              ),
+              ..._testData.map((e) => _MessageTile(message: e)).expand((element) => [
+                    element,
+                    SizedBox(
+                      height: 12 * context.sc,
+                    )
+                  ]),
+              SizedBox(
+                height: 100 * context.sc,
               ),
             ],
           ),
@@ -238,8 +243,7 @@ class _MessageTile extends StatelessWidget {
 
   bool get isSelf => message.isSelf;
 
-  AlignmentGeometry get alignment =>
-      isSelf ? Alignment.centerRight : Alignment.centerLeft;
+  AlignmentGeometry get alignment => isSelf ? Alignment.centerRight : Alignment.centerLeft;
 
   @override
   Widget build(BuildContext context) {
@@ -271,13 +275,13 @@ class _MessageTile extends StatelessWidget {
                 ),
                 child: Text(
                   content,
-                  style: TextStyle(
-                    fontSize: 15.sp,
+                  style: const TextStyle(
+                    fontSize: 15,
                   ),
                 ),
               ),
               SizedBox(
-                width: 4.w,
+                width: 4 * context.sc,
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -286,9 +290,9 @@ class _MessageTile extends StatelessWidget {
                 ),
                 child: Text(
                   messageDate,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: BaseColors.textDark,
-                    fontSize: 11.sp,
+                    fontSize: 11,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -303,7 +307,6 @@ class _MessageTile extends StatelessWidget {
 
 // сообщение пользователя
 
-
 class _DateLable extends StatelessWidget {
   const _DateLable({
     Key? key,
@@ -317,8 +320,8 @@ class _DateLable extends StatelessWidget {
     return Text(
       lable,
       textAlign: TextAlign.center,
-      style: TextStyle(
-        fontSize: 12.sp,
+      style: const TextStyle(
+        fontSize: 12,
         fontWeight: FontWeight.bold,
         color: BaseColors.textDark,
       ),
@@ -341,58 +344,59 @@ class _InputBar extends StatelessWidget {
                 // Icon clip
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(17).w,
-                    color: Color.fromRGBO(54, 49, 74, 1),
+                    borderRadius: BorderRadius.circular(17) * context.sc,
+                    color: const Color.fromRGBO(54, 49, 74, 1),
                   ),
-                  height: 52.h,
-                  width: 52.w,
+                  height: 52 * context.sc,
+                  width: 52 * context.sc,
                   child: IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       CupertinoIcons.paperclip,
-                      size: 25.sp,
+                      size: 25,
                     ),
                     onPressed: () {},
                   ),
                 ),
                 // Icon clip
                 SizedBox(
-                  width: 10.w,
+                  width: 10 * context.sc,
                 ),
                 Expanded(
                   child: Container(
-                    height: 55.h,
+                    height: 55 * context.sc,
                     decoration: BoxDecoration(
-                      border: Border.all(color: Color.fromRGBO(90, 77, 135, 1)),
-                      borderRadius: BorderRadius.circular(16).w,
-                      color: Color.fromRGBO(7, 2, 28, 1)
-                    ),
+                        border: Border.all(color: const Color.fromRGBO(90, 77, 135, 1)),
+                        borderRadius: BorderRadius.circular(16) * context.sc,
+                        color: const Color.fromRGBO(7, 2, 28, 1)),
                     child: Row(
                       children: [
-                        SizedBox(width: 20.w),
+                        SizedBox(
+                          width: 20 * context.sc,
+                        ),
                         const Expanded(
                           child: TextField(
                             decoration: InputDecoration(
                               // хз как задать размео хинту надо будет чекнуть
-                              hintText: "Message", 
+                              hintText: "Message",
                               border: InputBorder.none,
                             ),
                           ),
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15).w,
-                            color: Color.fromRGBO(237, 251, 139, 1),
+                            borderRadius: BorderRadius.circular(15) * context.sc,
+                            color: const Color.fromRGBO(237, 251, 139, 1),
                           ),
-                          height: 47.h,
-                          width: 47.w,
+                          height: 47 * context.sc,
+                          width: 47 * context.sc,
                           child: IconButton(
-                            icon: Icon(Icons.send),
+                            icon: const Icon(Icons.send),
                             color: Colors.black,
                             onPressed: () {},
                           ),
                         ),
                         SizedBox(
-                          width: 3.w,
+                          width: 3 * context.sc,
                         )
                       ],
                     ),
