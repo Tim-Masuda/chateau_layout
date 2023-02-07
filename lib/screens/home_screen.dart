@@ -113,43 +113,46 @@ class _BottomNavigationBarState extends State<_BottomNavigationBar> {
       ),
       child: TooltipVisibility(
         visible: false,
-        child: BottomNavigationBar(
-          selectedItemColor: BaseColors.textLigth,
-          unselectedItemColor: BaseColors.textDark,
-          currentIndex: selectedIndex,
-          onTap: selectItem,
-          selectedIconTheme: const IconThemeData(
-            color: BaseColors.textLigth,
-            size: 26,
-          ),
-          unselectedIconTheme: const IconThemeData(
-            color: BaseColors.textDark,
-            size: 26,
-          ),
-          selectedLabelStyle: const TextStyle(
-            color: BaseColors.textLigth,
-          ),
-          unselectedLabelStyle: const TextStyle(
-            color: BaseColors.textDark,
-          ),
-          selectedFontSize: 10,
-          unselectedFontSize: 10,
-          backgroundColor: BaseColors.secondary,
-          landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(ChateauIcons.apps),
-              label: 'Apps',
+        child: SizedBox(
+          height: 78 * context.sc,
+          child: BottomNavigationBar(
+            selectedItemColor: BaseColors.textLigth,
+            unselectedItemColor: BaseColors.textDark,
+            currentIndex: selectedIndex,
+            onTap: selectItem,
+            selectedIconTheme: IconThemeData(
+              color: BaseColors.textLigth,
+              size: 26 * context.sc,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(ChateauIcons.chats),
-              label: 'Chats',
+            unselectedIconTheme: IconThemeData(
+              color: BaseColors.textDark,
+              size: 26 * context.sc,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(ChateauIcons.profile),
-              label: 'Profile',
+            selectedLabelStyle: const TextStyle(
+              color: BaseColors.textLigth,
             ),
-          ],
+            unselectedLabelStyle: const TextStyle(
+              color: BaseColors.textDark,
+            ),
+            selectedFontSize: 13,
+            unselectedFontSize: 13,
+            backgroundColor: BaseColors.secondary,
+            landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(ChateauIcons.apps),
+                label: 'Apps',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(ChateauIcons.chats),
+                label: 'Chats',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(ChateauIcons.profile),
+                label: 'Profile',
+              ),
+            ],
+          ),
         ),
       ),
     );
