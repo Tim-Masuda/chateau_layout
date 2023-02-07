@@ -46,7 +46,7 @@ class Avatar extends StatelessWidget {
           backgroundColor: Theme.of(context).cardColor,
         ),
         AnimatedPositioned(
-          duration: Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: 200),
           height: isOnline ? 14.7 * context.sc : 0,
           width: isOnline ? 14.7 * context.sc : 0,
           right: isOnline ? 1 : 10 * context.sc,
@@ -60,7 +60,7 @@ class Avatar extends StatelessWidget {
               shape: BoxShape.circle,
               border: Border.all(
                 width: 3,
-                color: Color.fromRGBO(0, 0, 0, 1),
+                color: const Color.fromRGBO(0, 0, 0, 1),
               ),
             ),
           ),

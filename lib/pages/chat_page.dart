@@ -15,7 +15,9 @@ class ChatPage extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         const SliverToBoxAdapter(),
-        SliverList(delegate: SliverChildBuilderDelegate(_delegate))
+        SliverList(
+          delegate: SliverChildBuilderDelegate(_delegate),
+        )
       ],
     );
   }
@@ -30,8 +32,7 @@ class ChatPage extends StatelessWidget {
         messageDate: DateTime(66666),
         dateMessage: Jiffy(DateTime(66666)).fromNow(),
         profilePicture: const Avatar.large(
-          url:
-              "https://cdn.discordapp.com/attachments/1004867968271908974/1037045682193846282/unknown.png",
+          url: "https://cdn.discordapp.com/attachments/1004867968271908974/1037045682193846282/unknown.png",
         ),
       ),
     );
@@ -46,13 +47,10 @@ class MessageBloc extends StatelessWidget {
 
   final MessageData messageData;
 
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.of(context).push(MessageScreen.route(messageData));
-      },
+      onTap: () => Navigator.of(context).push(MessageScreen.route(messageData)),
       child: SizedBox(
         height: 80 * context.sc,
         child: Padding(

@@ -1,11 +1,8 @@
-import 'dart:ffi';
-
 import 'package:chateau_mobile_homescreen/chateau_icons.dart';
 import 'package:chateau_mobile_homescreen/models/message_data.dart';
 import 'package:chateau_mobile_homescreen/scale.dart';
 import 'package:chateau_mobile_homescreen/theme.dart';
 import 'package:chateau_mobile_homescreen/widgets/avatar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 const _testData = [
@@ -43,11 +40,15 @@ const _testData = [
 
 class MessageScreen extends StatelessWidget {
   static Route route(MessageData data) => MaterialPageRoute(
-      builder: (context) => MessageScreen(
-            messageData: data,
-          ));
+        builder: (context) => MessageScreen(
+          messageData: data,
+        ),
+      );
 
-  const MessageScreen({Key? key, required this.messageData}) : super(key: key);
+  const MessageScreen({
+    Key? key,
+    required this.messageData,
+  }) : super(key: key);
 
   final MessageData messageData;
 
@@ -78,8 +79,7 @@ class MessageScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 18) * context.sc,
             child: const Avatar.medium(
-              url:
-                  'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+              url: 'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
             ),
           )
         ],
@@ -172,14 +172,12 @@ class _MessageList extends StatelessWidget {
               SizedBox(
                 height: 16 * context.sc,
               ),
-              ..._testData
-                  .map((e) => _MessageTile(message: e))
-                  .expand((element) => [
-                        element,
-                        SizedBox(
-                          height: 12 * context.sc,
-                        )
-                      ]),
+              ..._testData.map((e) => _MessageTile(message: e)).expand((element) => [
+                    element,
+                    SizedBox(
+                      height: 12 * context.sc,
+                    )
+                  ]),
               SizedBox(
                 height: 16 * context.sc,
               ),
@@ -189,14 +187,12 @@ class _MessageList extends StatelessWidget {
               SizedBox(
                 height: 16 * context.sc,
               ),
-              ..._testData
-                  .map((e) => _MessageTile(message: e))
-                  .expand((element) => [
-                        element,
-                        SizedBox(
-                          height: 12 * context.sc,
-                        )
-                      ]),
+              ..._testData.map((e) => _MessageTile(message: e)).expand((element) => [
+                    element,
+                    SizedBox(
+                      height: 12 * context.sc,
+                    )
+                  ]),
               SizedBox(
                 height: 16 * context.sc,
               ),
@@ -206,14 +202,12 @@ class _MessageList extends StatelessWidget {
               SizedBox(
                 height: 16 * context.sc,
               ),
-              ..._testData
-                  .map((e) => _MessageTile(message: e))
-                  .expand((element) => [
-                        element,
-                        SizedBox(
-                          height: 12 * context.sc,
-                        )
-                      ]),
+              ..._testData.map((e) => _MessageTile(message: e)).expand((element) => [
+                    element,
+                    SizedBox(
+                      height: 12 * context.sc,
+                    )
+                  ]),
               SizedBox(
                 height: 100 * context.sc,
               ),
@@ -253,8 +247,7 @@ class _MessageTile extends StatelessWidget {
 
   bool get isSelf => message.isSelf;
 
-  AlignmentGeometry get alignment =>
-      isSelf ? Alignment.centerRight : Alignment.centerLeft;
+  AlignmentGeometry get alignment => isSelf ? Alignment.centerRight : Alignment.centerLeft;
 
   @override
   Widget build(BuildContext context) {
@@ -355,14 +348,10 @@ class _InputBar extends StatelessWidget {
           ),
           TextField(
             decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(
-                      left: 16, bottom: 14, top: 14, right: 8) *
-                  context.sc,
+              contentPadding: const EdgeInsets.only(left: 16, bottom: 14, top: 14, right: 8) * context.sc,
               border: OutlineInputBorder(
-                borderSide:
-                    const BorderSide(color: Color.fromRGBO(90, 77, 135, 1)),
-                borderRadius:
-                    BorderRadius.all(const Radius.circular(16) * context.sc),
+                borderSide: const BorderSide(color: Color.fromRGBO(90, 77, 135, 1)),
+                borderRadius: BorderRadius.all(const Radius.circular(16) * context.sc),
               ),
             ),
           ),
@@ -447,14 +436,14 @@ class _AttachButton extends StatelessWidget {
 }
 
 class _SquareIconButton extends StatelessWidget {
-  const _SquareIconButton({
-    Key? key,
-    required this.backgroundColor,
-    this.padding = 11,
-    required this.radius,
-    required this.icon,
-    required this.iconTheme
-  }) : super(key: key);
+  const _SquareIconButton(
+      {Key? key,
+      required this.backgroundColor,
+      this.padding = 11,
+      required this.radius,
+      required this.icon,
+      required this.iconTheme})
+      : super(key: key);
 
   final Color backgroundColor;
 
