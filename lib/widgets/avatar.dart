@@ -52,9 +52,6 @@ class Avatar extends StatelessWidget {
           right: isOnline ? 1 : 10 * context.sc,
           bottom: isOnline ? 1 : 10 * context.sc,
           child: Container(
-            // duration: Duration(milliseconds: 200),
-            // height: isOnline ? 14.7 * context.sc : 0,
-            // width: isOnline ? 14.7 * context.sc : 0,
             decoration: BoxDecoration(
               color: BaseColors.pink,
               shape: BoxShape.circle,

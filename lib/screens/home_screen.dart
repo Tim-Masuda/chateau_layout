@@ -114,7 +114,7 @@ class _BottomNavigationBarState extends State<_BottomNavigationBar> {
       child: TooltipVisibility(
         visible: false,
         child: SizedBox(
-          height: 78 * context.sc,
+          height: 70 * context.sc,
           child: BottomNavigationBar(
             selectedItemColor: BaseColors.textLigth,
             unselectedItemColor: BaseColors.textDark,

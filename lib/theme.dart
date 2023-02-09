@@ -11,6 +11,8 @@ abstract class BaseColors {
   static const pink = Color.fromARGB(225, 239, 1, 231);
 }
 
+
+
 abstract class _DarkColors {
   static const background = Color.fromRGBO(8, 2, 28, 1);
   static const card = BaseColors.cardDark;
@@ -23,7 +25,6 @@ abstract class BaseTheme {
   /// Dark theme and its settings.
   static ThemeData dark() => ThemeData(
         brightness: Brightness.dark,
-        accentColor: accentColor,
         visualDensity: visualDensity,
         textTheme:
             GoogleFonts.mulishTextTheme().apply(bodyColor: BaseColors.textLigth),
