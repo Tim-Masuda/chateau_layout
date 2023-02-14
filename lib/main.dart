@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           home: AnnotatedRegion<SystemUiOverlayStyle>(
             value: SystemUiOverlayStyle.dark.copyWith(
               statusBarIconBrightness: Brightness.dark,
-            ),
+              ),
             child: Builder(
               builder: (context) => MediaQuery(
                 data: MediaQuery.of(context).copyWith(

@@ -5,23 +5,37 @@ import 'package:chateau_mobile_homescreen/theme.dart';
 import 'package:chateau_mobile_homescreen/widgets/avatar.dart';
 import 'package:flutter/material.dart';
 
-class MessageScreen extends StatelessWidget {
+class MessageScreen extends StatefulWidget {
   static Route route(MessageData data) => MaterialPageRoute(
-        builder: (context) => MessageScreen(
-          messageData: data,
-        ),
+        builder: (context) => MessageScreen(messageData: data),
       );
+  final MessageData messageData;
 
   const MessageScreen({
     Key? key,
     required this.messageData,
   }) : super(key: key);
 
-  final MessageData messageData;
+  static send(
+    BuildContext context, {
+    required Message message,
+  }) =>
+      context.findAncestorStateOfType<_MessageScreenState>()!.addMessage(message);
+
+  @override
+  State<MessageScreen> createState() => _MessageScreenState();
+}
+
+class _MessageScreenState extends State<MessageScreen> {
+  var _messages = const <Message>[];
+
+  void addMessage(Message message) => setState(() => _messages = [..._messages, message]);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -29,34 +43,32 @@ class MessageScreen extends StatelessWidget {
         backgroundColor: BaseColors.secondary,
         centerTitle: true,
         title: _AppBarTitle(
-          messageData: messageData,
+          messageData: widget.messageData,
         ),
         leading: Padding(
           padding: const EdgeInsets.only(left: 16.0) * context.sc,
           child: IconButton(
             iconSize: 16.0 * context.sc,
             icon: const Icon(ChateauIcons.navigate_back),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            // size: 27,
+            onPressed: Navigator.of(context).pop,
           ),
         ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 18, top: 10) * context.sc,
             child: const Avatar.medium(
-              url:
-                  'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+              url: 'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
             ),
           )
         ],
       ),
-      body: Stack(
-        children: [
-          _MessageBackground(),
-          _InputBar(),
-        ],
+      body: _MessageBackground(
+        child: MessageList(
+          messages: _messages,
+        ),
+      ),
+      bottomNavigationBar: const _KeyboardInsetsHandler(
+        child: _InputBar(),
       ),
     );
   }
@@ -104,7 +116,12 @@ class _AppBarTitle extends StatelessWidget {
 }
 
 class _MessageBackground extends StatelessWidget {
-  _MessageBackground({Key? key}) : super(key: key);
+  final Widget child;
+
+  const _MessageBackground({
+    super.key,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -124,8 +141,10 @@ class _MessageBackground extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: MessageList(),
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.0 * context.sc,
+          ),
+          child: child,
         ),
       ),
     );
@@ -133,41 +152,72 @@ class _MessageBackground extends StatelessWidget {
 }
 
 class MessageList extends StatefulWidget {
-  MessageList({
-    Key? key,
-  }) : super(key: key);
+  final List<Message> messages;
+
+  const MessageList({
+    super.key,
+    required this.messages,
+  });
 
   @override
   State<MessageList> createState() => _MessageListState();
 }
 
+// final position = widget.scrollController.position;
+// final pixels = position.pixels;
+// final maxExtent = position.maxScrollExtent;
+// final viewPort = position.viewportDimension;
+//
+// if (pixels > maxExtent - viewPort * 1.5) {
+// isBusy = true;
+// widget.loadNext();
+// Future<void>.delayed(widget.throttleTime).then((_) => isBusy = false);
+
+extension on ScrollPosition {
+  bool get atBottomEdge => pixels == maxScrollExtent;
+}
+
 class _MessageListState extends State<MessageList> {
+  final _scrollController = ScrollController();
+
+  @override
+  void didUpdateWidget(covariant MessageList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.messages.length <= oldWidget.messages.length) return;
+
+    final position = _scrollController.position;
+    final pixels = position.pixels;
+    final maxExtent = position.maxScrollExtent;
+    final viewPort = position.viewportDimension;
+
+    _scrollController.animateTo(
+      maxExtent,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeIn,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    var messageData = [
-      Message(
-        content: messageGl,
-      ),
-    ];
     return ListView(
+      controller: _scrollController,
       children: [
         SizedBox(
           height: 16 * context.sc,
         ),
-        const _DateLable(
+        const _DateLabel(
           lable: '6 October ',
         ),
         SizedBox(
           height: 16 * context.sc,
         ),
-        ...messageData
-            .map((e) => _MessageTile(message: e))
-            .expand((element) => [
-                  element,
-                  SizedBox(
-                    height: 12 * context.sc,
-                  )
-                ]),
+        ...widget.messages.map((e) => _MessageTile(message: e)).expand((element) => [
+              element,
+              SizedBox(
+                height: 12 * context.sc,
+              )
+            ]),
         SizedBox(
           height: 76 * context.sc,
         ),
@@ -188,7 +238,6 @@ class Message {
   });
 }
 
-// сообщение собеседника
 class _MessageTile extends StatelessWidget {
   static const _radius = Radius.circular(13);
   final Message message;
@@ -204,8 +253,7 @@ class _MessageTile extends StatelessWidget {
 
   bool get isSelf => message.isSelf;
 
-  AlignmentGeometry get alignment =>
-      isSelf ? Alignment.centerRight : Alignment.centerLeft;
+  AlignmentGeometry get alignment => isSelf ? Alignment.centerRight : Alignment.centerLeft;
 
   @override
   Widget build(BuildContext context) {
@@ -267,8 +315,8 @@ class _MessageTile extends StatelessWidget {
   }
 }
 
-class _DateLable extends StatelessWidget {
-  const _DateLable({
+class _DateLabel extends StatelessWidget {
+  const _DateLabel({
     Key? key,
     required this.lable,
   }) : super(key: key);
@@ -289,59 +337,93 @@ class _DateLable extends StatelessWidget {
   }
 }
 
-final controller = TextEditingController();
-var messageGl = '';
+@immutable
+class _KeyboardInsetsHandler extends StatelessWidget {
+  final Widget child;
 
-class _InputBar extends StatelessWidget {
-  _InputBar({Key? key}) : super(key: key);
+  const _KeyboardInsetsHandler({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: MediaQuery.of(context).viewInsets,
+        child: child,
+      );
+}
+
+class _InputBar extends StatefulWidget {
+  const _InputBar({Key? key}) : super(key: key);
+
+  @override
+  State<_InputBar> createState() => _InputBarState();
+}
+
+class _InputBarState extends State<_InputBar> {
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Padding(
-        padding:
-            const EdgeInsets.only(bottom: 20, right: 16, left: 16) * context.sc,
-        child: SizedBox(
-          height: 46 * context.sc,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              const _AttachButton(),
-              SizedBox(
-                width: 8 * context.sc,
-              ),
-              Expanded(
-                child: TextField(
-                  controller: controller,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Color.fromRGBO(7, 2, 28, 1),
-                    hintText: 'Message',
-                    suffixIconConstraints: const BoxConstraints(
-                      maxHeight: 43,
+    return Padding(
+      padding: const EdgeInsets.only(
+            bottom: 20,
+            right: 16,
+            left: 16,
+          ) *
+          context.sc,
+      child: SizedBox(
+        height: 46 * context.sc,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            _AttachButton(
+              onPressed: () {},
+            ),
+            SizedBox(
+              width: 8 * context.sc,
+            ),
+            Expanded(
+              child: TextField(
+                controller: _controller,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: const Color.fromRGBO(7, 2, 28, 1),
+                  hintText: 'Message',
+                  suffixIcon: Padding(
+                    padding: const EdgeInsets.all(3) * context.sc,
+                    child: _SendButton(
+                      onPressed: () => MessageScreen.send(
+                        context,
+                        message: Message(
+                          content: _controller.text,
+                        ),
+                      ),
                     ),
-                    suffixIcon: _SendButton(),
-                    contentPadding: const EdgeInsets.only(
-                            left: 16, bottom: 14, top: 14, right: 8) *
-                        context.sc,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromRGBO(90, 77, 135, 1)),
-                      borderRadius: BorderRadius.all(
-                          const Radius.circular(16) * context.sc),
+                  ),
+                  contentPadding: const EdgeInsets.only(left: 16, bottom: 14, top: 14, right: 8) * context.sc,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Color.fromRGBO(90, 77, 135, 1),
                     ),
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromRGBO(90, 77, 135, 1)),
-                      borderRadius: BorderRadius.all(
-                          const Radius.circular(16) * context.sc),
+                    borderRadius: BorderRadius.circular(16 * context.sc),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Color.fromRGBO(90, 77, 135, 1),
                     ),
+                    borderRadius: BorderRadius.circular(16 * context.sc),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -349,8 +431,11 @@ class _InputBar extends StatelessWidget {
 }
 
 class _AttachButton extends StatelessWidget {
+  final void Function() onPressed;
+
   const _AttachButton({
     Key? key,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -362,19 +447,17 @@ class _AttachButton extends StatelessWidget {
           backgroundColor: const MaterialStatePropertyAll<Color>(
             Color.fromRGBO(54, 49, 74, 1),
           ),
-          padding: MaterialStatePropertyAll<EdgeInsets>(
-            const EdgeInsets.all(11) * context.sc,
-          ),
           shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16) * context.sc,
             ),
           ),
+          padding: const MaterialStatePropertyAll<EdgeInsets>(EdgeInsets.all(0)),
         ),
-        onPressed: () {},
+        onPressed: onPressed,
         child: Icon(
           ChateauIcons.attach,
-          size: 22 * context.sc,
+          size: 19.5 * context.sc,
           color: Colors.white,
         ),
       ),
@@ -382,87 +465,33 @@ class _AttachButton extends StatelessWidget {
   }
 }
 
-class _SendButton extends StatefulWidget {
+class _SendButton extends StatelessWidget {
+  final void Function() onPressed;
+
   const _SendButton({
     Key? key,
+    required this.onPressed,
   }) : super(key: key);
 
-  @override
-  State<_SendButton> createState() => _SendButtonState();
-}
-
-class _SendButtonState extends State<_SendButton> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1,
       child: OutlinedButton(
         style: ButtonStyle(
-          backgroundColor:
-              const MaterialStatePropertyAll<Color>(BaseColors.yellow),
-          padding: MaterialStatePropertyAll<EdgeInsets>(
-            const EdgeInsets.all(11) * context.sc,
-          ),
+          backgroundColor: const MaterialStatePropertyAll<Color>(BaseColors.yellow),
           shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15) * context.sc,
+              borderRadius: BorderRadius.circular(13) * context.sc,
             ),
           ),
+          padding: const MaterialStatePropertyAll<EdgeInsets>(EdgeInsets.all(0)),
         ),
-        onPressed: () {
-          setState(() {
-            messageGl = controller.text;
-          });
-        },
+        onPressed: onPressed,
         child: Icon(
           ChateauIcons.send,
-          size: 22 * context.sc,
+          size: 18.1 * context.sc,
           color: Colors.black,
-        ),
-      ),
-    );
-  }
-}
-
-class _SquareIconButton extends StatelessWidget {
-  const _SquareIconButton(
-      {Key? key,
-      required this.backgroundColor,
-      this.padding = 11,
-      required this.radius,
-      required this.icon,
-      required this.iconTheme})
-      : super(key: key);
-
-  final Color backgroundColor;
-
-  final double padding;
-
-  final double radius;
-
-  final IconData icon;
-
-  final IconThemeData iconTheme;
-
-  @override
-  Widget build(BuildContext context) {
-    return OutlinedButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStatePropertyAll<Color>(backgroundColor),
-        padding: MaterialStatePropertyAll<EdgeInsets>(
-          EdgeInsets.all(padding) * context.sc,
-        ),
-        shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radius) * context.sc,
-          ),
-        ),
-      ),
-      onPressed: () {},
-      child: IconTheme(
-        data: iconTheme,
-        child: Icon(
-          icon,
         ),
       ),
     );
