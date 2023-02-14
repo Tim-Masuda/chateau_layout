@@ -5,39 +5,6 @@ import 'package:chateau_mobile_homescreen/theme.dart';
 import 'package:chateau_mobile_homescreen/widgets/avatar.dart';
 import 'package:flutter/material.dart';
 
-const _testData = [
-  Message(
-    content: 'Are u okey & ',
-    messageDate: '14:01 PM',
-    isSelf: false,
-  ),
-  Message(
-    content: 'YWow',
-    messageDate: '15:02 PM',
-    isSelf: true,
-  ),
-  Message(
-    content: 'Do you want Starbucks?',
-    messageDate: '16:02 PM',
-    isSelf: false,
-  ),
-  Message(
-    content: 'Would be awesome!',
-    messageDate: '17:03 PM',
-    isSelf: true,
-  ),
-  Message(
-    content: 'Coming upsrfsf\nsef!dfgdfg',
-    messageDate: '18:03 PM',
-    isSelf: false,
-  ),
-  Message(
-    content: 'wow',
-    messageDate: '18:03 PM',
-    isSelf: true,
-  ),
-];
-
 class MessageScreen extends StatelessWidget {
   static Route route(MessageData data) => MaterialPageRoute(
         builder: (context) => MessageScreen(
@@ -58,7 +25,7 @@ class MessageScreen extends StatelessWidget {
       appBar: AppBar(
         bottomOpacity: 0.0,
         elevation: 0.0,
-        toolbarHeight: 85 * context.sc,
+        toolbarHeight: 72 * context.sc,
         backgroundColor: BaseColors.secondary,
         centerTitle: true,
         title: _AppBarTitle(
@@ -77,21 +44,18 @@ class MessageScreen extends StatelessWidget {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 18) * context.sc,
+            padding: const EdgeInsets.only(right: 18, top: 10) * context.sc,
             child: const Avatar.medium(
-              url: 'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+              url:
+                  'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
             ),
           )
         ],
       ),
       body: Stack(
         children: [
-          const _MessageList(),
-          Positioned(
-            width: MediaQuery.of(context).size.width,
-            bottom: 0,
-            child: const _InputBar(),
-          ),
+          _MessageBackground(),
+          _InputBar(),
         ],
       ),
     );
@@ -139,8 +103,8 @@ class _AppBarTitle extends StatelessWidget {
   }
 }
 
-class _MessageList extends StatelessWidget {
-  const _MessageList({Key? key}) : super(key: key);
+class _MessageBackground extends StatelessWidget {
+  _MessageBackground({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -160,61 +124,54 @@ class _MessageList extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: ListView(
-            children: [
-              SizedBox(
-                height: 16 * context.sc,
-              ),
-              const _DateLable(
-                lable: '6 October ',
-              ),
-              SizedBox(
-                height: 16 * context.sc,
-              ),
-              ..._testData.map((e) => _MessageTile(message: e)).expand((element) => [
-                    element,
-                    SizedBox(
-                      height: 12 * context.sc,
-                    )
-                  ]),
-              SizedBox(
-                height: 16 * context.sc,
-              ),
-              const _DateLable(
-                lable: '6 October ',
-              ),
-              SizedBox(
-                height: 16 * context.sc,
-              ),
-              ..._testData.map((e) => _MessageTile(message: e)).expand((element) => [
-                    element,
-                    SizedBox(
-                      height: 12 * context.sc,
-                    )
-                  ]),
-              SizedBox(
-                height: 16 * context.sc,
-              ),
-              const _DateLable(
-                lable: '6 October ',
-              ),
-              SizedBox(
-                height: 16 * context.sc,
-              ),
-              ..._testData.map((e) => _MessageTile(message: e)).expand((element) => [
-                    element,
-                    SizedBox(
-                      height: 12 * context.sc,
-                    )
-                  ]),
-              SizedBox(
-                height: 100 * context.sc,
-              ),
-            ],
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: MessageList(),
         ),
       ),
+    );
+  }
+}
+
+class MessageList extends StatefulWidget {
+  MessageList({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<MessageList> createState() => _MessageListState();
+}
+
+class _MessageListState extends State<MessageList> {
+  @override
+  Widget build(BuildContext context) {
+    var messageData = [
+      Message(
+        content: messageGl,
+      ),
+    ];
+    return ListView(
+      children: [
+        SizedBox(
+          height: 16 * context.sc,
+        ),
+        const _DateLable(
+          lable: '6 October ',
+        ),
+        SizedBox(
+          height: 16 * context.sc,
+        ),
+        ...messageData
+            .map((e) => _MessageTile(message: e))
+            .expand((element) => [
+                  element,
+                  SizedBox(
+                    height: 12 * context.sc,
+                  )
+                ]),
+        SizedBox(
+          height: 76 * context.sc,
+        ),
+      ],
     );
   }
 }
@@ -226,8 +183,8 @@ class Message {
 
   const Message({
     required this.content,
-    required this.messageDate,
-    required this.isSelf,
+    this.messageDate = '18:00',
+    this.isSelf = true,
   });
 }
 
@@ -247,7 +204,8 @@ class _MessageTile extends StatelessWidget {
 
   bool get isSelf => message.isSelf;
 
-  AlignmentGeometry get alignment => isSelf ? Alignment.centerRight : Alignment.centerLeft;
+  AlignmentGeometry get alignment =>
+      isSelf ? Alignment.centerRight : Alignment.centerLeft;
 
   @override
   Widget build(BuildContext context) {
@@ -309,8 +267,6 @@ class _MessageTile extends StatelessWidget {
   }
 }
 
-// сообщение пользователя
-
 class _DateLable extends StatelessWidget {
   const _DateLable({
     Key? key,
@@ -333,72 +289,60 @@ class _DateLable extends StatelessWidget {
   }
 }
 
+final controller = TextEditingController();
+var messageGl = '';
+
 class _InputBar extends StatelessWidget {
-  const _InputBar({Key? key}) : super(key: key);
+  _InputBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16) * context.sc,
-      child: Row(
-        children: [
-          const _AttachButton(),
-          SizedBox(
-            width: 10 * context.sc,
-          ),
-          TextField(
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(left: 16, bottom: 14, top: 14, right: 8) * context.sc,
-              border: OutlineInputBorder(
-                borderSide: const BorderSide(color: Color.fromRGBO(90, 77, 135, 1)),
-                borderRadius: BorderRadius.all(const Radius.circular(16) * context.sc),
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+        padding:
+            const EdgeInsets.only(bottom: 20, right: 16, left: 16) * context.sc,
+        child: SizedBox(
+          height: 46 * context.sc,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              const _AttachButton(),
+              SizedBox(
+                width: 8 * context.sc,
               ),
-            ),
+              Expanded(
+                child: TextField(
+                  controller: controller,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Color.fromRGBO(7, 2, 28, 1),
+                    hintText: 'Message',
+                    suffixIconConstraints: const BoxConstraints(
+                      maxHeight: 43,
+                    ),
+                    suffixIcon: _SendButton(),
+                    contentPadding: const EdgeInsets.only(
+                            left: 16, bottom: 14, top: 14, right: 8) *
+                        context.sc,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromRGBO(90, 77, 135, 1)),
+                      borderRadius: BorderRadius.all(
+                          const Radius.circular(16) * context.sc),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromRGBO(90, 77, 135, 1)),
+                      borderRadius: BorderRadius.all(
+                          const Radius.circular(16) * context.sc),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          // Expanded(
-          //   child: Container(
-          //     height: 55 * context.sc,
-          //     decoration: BoxDecoration(
-          //         border: Border.all(color: const Color.fromRGBO(90, 77, 135, 1)),
-          //         borderRadius: BorderRadius.circular(16) * context.sc,
-          //         color: const Color.fromRGBO(7, 2, 28, 1)),
-          //     child: Row(
-          //       children: [
-          //         SizedBox(
-          //           width: 20 * context.sc,
-          //         ),
-          //         const Expanded(
-          //           child: TextField(
-          //             decoration: InputDecoration(
-          //               // размер
-          //               hintText: "Message",
-          //               border: InputBorder.none,
-          //             ),
-          //           ),
-          //         ),
-          //         IconButton(
-          //           onPressed: () {},
-          //           icon: Container(
-          //             padding: const EdgeInsets.all(11) * context.sc,
-          //             decoration: BoxDecoration(
-          //               borderRadius: BorderRadius.circular(13) * context.sc,
-          //               color: const Color.fromRGBO(237, 251, 139, 1),
-          //             ),
-          //             child: Icon(
-          //               ChateauIcons.send,
-          //               size: 18 * context.sc,
-          //               color: Colors.black,
-          //             ),
-          //           ),
-          //         ),
-          //         SizedBox(
-          //           width: 3 * context.sc,
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // )
-        ],
+        ),
       ),
     );
   }
@@ -411,25 +355,70 @@ class _AttachButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStatePropertyAll<Color>(
-          const Color.fromRGBO(54, 49, 74, 1),
-        ),
-        padding: MaterialStatePropertyAll<EdgeInsets>(
-          const EdgeInsets.all(11) * context.sc,
-        ),
-        shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16) * context.sc,
+    return AspectRatio(
+      aspectRatio: 1,
+      child: OutlinedButton(
+        style: ButtonStyle(
+          backgroundColor: const MaterialStatePropertyAll<Color>(
+            Color.fromRGBO(54, 49, 74, 1),
+          ),
+          padding: MaterialStatePropertyAll<EdgeInsets>(
+            const EdgeInsets.all(11) * context.sc,
+          ),
+          shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16) * context.sc,
+            ),
           ),
         ),
+        onPressed: () {},
+        child: Icon(
+          ChateauIcons.attach,
+          size: 22 * context.sc,
+          color: Colors.white,
+        ),
       ),
-      onPressed: () {},
-      child: Icon(
-        ChateauIcons.attach,
-        size: 24 * context.sc,
-        color: Colors.white,
+    );
+  }
+}
+
+class _SendButton extends StatefulWidget {
+  const _SendButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<_SendButton> createState() => _SendButtonState();
+}
+
+class _SendButtonState extends State<_SendButton> {
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 1,
+      child: OutlinedButton(
+        style: ButtonStyle(
+          backgroundColor:
+              const MaterialStatePropertyAll<Color>(BaseColors.yellow),
+          padding: MaterialStatePropertyAll<EdgeInsets>(
+            const EdgeInsets.all(11) * context.sc,
+          ),
+          shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15) * context.sc,
+            ),
+          ),
+        ),
+        onPressed: () {
+          setState(() {
+            messageGl = controller.text;
+          });
+        },
+        child: Icon(
+          ChateauIcons.send,
+          size: 22 * context.sc,
+          color: Colors.black,
+        ),
       ),
     );
   }

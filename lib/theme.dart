@@ -9,6 +9,7 @@ abstract class BaseColors {
   static const textDark = Color.fromRGBO(142, 142, 147, 1);
   static const cardDark = Color.fromRGBO(8, 2, 28, 1);
   static const pink = Color.fromARGB(225, 239, 1, 231);
+  static const yellow = Color.fromRGBO(237, 251, 139, 1);
 }
 
 

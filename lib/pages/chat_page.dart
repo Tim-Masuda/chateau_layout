@@ -32,7 +32,8 @@ class ChatPage extends StatelessWidget {
         messageDate: DateTime(66666),
         dateMessage: Jiffy(DateTime(66666)).fromNow(),
         profilePicture: const Avatar.large(
-          url: "https://cdn.discordapp.com/attachments/1004867968271908974/1037045682193846282/unknown.png",
+          url:
+              "https://cdn.discordapp.com/attachments/1004867968271908974/1037045682193846282/unknown.png",
         ),
       ),
     );
@@ -110,22 +111,8 @@ class MessageBloc extends StatelessWidget {
                   const Spacer(
                     flex: 14,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 3,
-                      horizontal: 6,
-                    ),
-                    decoration: const BoxDecoration(
-                      color: BaseColors.textLigth,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: const Text(
-                      '1',
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: Colors.black,
-                      ),
-                    ),
+                  AnimatedRound(
+                    counter: 5,
                   ),
                   const Spacer(
                     flex: 9,
@@ -138,4 +125,86 @@ class MessageBloc extends StatelessWidget {
       ),
     );
   }
+}
+
+class AnimatedRound extends StatefulWidget {
+  final int counter;
+
+  const AnimatedRound({
+    Key? key,
+    required this.counter,
+  }) : super(key: key);
+
+  @override
+  State<AnimatedRound> createState() => _AnimatedRoundState();
+}
+
+const _duration = Duration(milliseconds: 125);
+const _curve = Curves.easeInCubic;
+
+class _AnimatedRoundState extends State<AnimatedRound>
+    with SingleTickerProviderStateMixin {
+  late final _controller =
+      AnimationController(duration: _duration, vsync: this);
+  late final _animation = CurvedAnimation(parent: _controller, curve: _curve);
+  final _slideTween =
+      Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero);
+
+  @override
+  void didUpdateWidget(covariant AnimatedRound oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.counter == oldWidget.counter) return;
+
+    _controller.forward().then((_) {
+      if (mounted && !_controller.isAnimating) _controller.reverse();
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => RepaintBoundary(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(999),
+          child: ColoredBox(
+            color: Colors.white,
+            child: AnimatedBuilder(
+              animation: _animation,
+              builder: (BuildContext context, Widget? child) => Padding(
+                padding: const EdgeInsets.symmetric(
+                      vertical: 3,
+                      horizontal: 6,
+                    ) +
+                    EdgeInsets.symmetric(
+                            vertical: _animation.value * 2,
+                            horizontal: _animation.value * 2) *
+                        context.sc,
+                child: child,
+              ),
+              child: AnimatedSwitcher(
+                switchInCurve: _curve,
+                switchOutCurve: _curve,
+                duration: _duration,
+                // reverseDuration: const Duration(milliseconds: 75),
+                transitionBuilder:
+                    (Widget child, Animation<double> animation) =>
+                        SlideTransition(
+                  position: _slideTween.animate(animation),
+                  child: child,
+                ),
+                child: Text(
+                  '${widget.counter}',
+                  key: ValueKey<int>(widget.counter),
+                  style: const TextStyle(fontSize: 10, color: Colors.black),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
 }
