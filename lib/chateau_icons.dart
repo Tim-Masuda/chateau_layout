@@ -25,6 +25,7 @@ class ChateauIcons {
   static const IconData apps = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData attach = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData chats = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  // ignore: constant_identifier_names
   static const IconData navigate_back = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData profile = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData search = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);

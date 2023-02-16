@@ -111,7 +111,7 @@ class MessageBloc extends StatelessWidget {
                   const Spacer(
                     flex: 14,
                   ),
-                  AnimatedRound(
+                  const AnimatedRound(
                     counter: 5,
                   ),
                   const Spacer(

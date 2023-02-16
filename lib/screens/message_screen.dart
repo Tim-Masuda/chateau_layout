@@ -20,7 +20,9 @@ class MessageScreen extends StatefulWidget {
     BuildContext context, {
     required Message message,
   }) =>
-      context.findAncestorStateOfType<_MessageScreenState>()!.addMessage(message);
+      context
+          .findAncestorStateOfType<_MessageScreenState>()!
+          .addMessage(message);
 
   @override
   State<MessageScreen> createState() => _MessageScreenState();
@@ -29,7 +31,8 @@ class MessageScreen extends StatefulWidget {
 class _MessageScreenState extends State<MessageScreen> {
   var _messages = const <Message>[];
 
-  void addMessage(Message message) => setState(() => _messages = [..._messages, message]);
+  void addMessage(Message message) =>
+      setState(() => _messages = [..._messages, message]);
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +58,10 @@ class _MessageScreenState extends State<MessageScreen> {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 18, top: 10) * context.sc,
+            padding: const EdgeInsets.only(right: 18, top: 17) * context.sc,
             child: const Avatar.medium(
-              url: 'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+              url:
+                  'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
             ),
           )
         ],
@@ -163,16 +167,6 @@ class MessageList extends StatefulWidget {
   State<MessageList> createState() => _MessageListState();
 }
 
-// final position = widget.scrollController.position;
-// final pixels = position.pixels;
-// final maxExtent = position.maxScrollExtent;
-// final viewPort = position.viewportDimension;
-//
-// if (pixels > maxExtent - viewPort * 1.5) {
-// isBusy = true;
-// widget.loadNext();
-// Future<void>.delayed(widget.throttleTime).then((_) => isBusy = false);
-
 extension on ScrollPosition {
   bool get atBottomEdge => pixels == maxScrollExtent;
 }
@@ -183,7 +177,6 @@ class _MessageListState extends State<MessageList> {
   @override
   void didUpdateWidget(covariant MessageList oldWidget) {
     super.didUpdateWidget(oldWidget);
-
     if (widget.messages.length <= oldWidget.messages.length) return;
 
     final position = _scrollController.position;
@@ -191,37 +184,47 @@ class _MessageListState extends State<MessageList> {
     final maxExtent = position.maxScrollExtent;
     final viewPort = position.viewportDimension;
 
-    _scrollController.animateTo(
-      maxExtent,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeIn,
-    );
+    if (_scrollController.offset >=
+        _scrollController.position.maxScrollExtent - 200) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 250),
+        curve: Curves.easeOut,
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      controller: _scrollController,
-      children: [
-        SizedBox(
-          height: 16 * context.sc,
-        ),
-        const _DateLabel(
-          lable: '6 October ',
-        ),
-        SizedBox(
-          height: 16 * context.sc,
-        ),
-        ...widget.messages.map((e) => _MessageTile(message: e)).expand((element) => [
-              element,
-              SizedBox(
-                height: 12 * context.sc,
-              )
-            ]),
-        SizedBox(
-          height: 76 * context.sc,
-        ),
-      ],
+    return SingleChildScrollView(
+      child: ListView(
+        controller: _scrollController,
+        children: [
+          SizedBox(
+            height: 16 * context.sc,
+          ),
+          const _DateLabel(
+            lable: '6 October ',
+          ),
+          SizedBox(
+            height: 16 * context.sc,
+          ),
+          ...widget.messages
+              .map((e) => _MessageTile(message: e))
+              .expand((element) => [
+                    element,
+                    SizedBox(
+                      height: 12 * context.sc,
+                    )
+                  ]),
+          SizedBox(
+            height: 60 * context.sc,
+          ),
+          Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom))
+        ],
+      ),
     );
   }
 }
@@ -253,7 +256,8 @@ class _MessageTile extends StatelessWidget {
 
   bool get isSelf => message.isSelf;
 
-  AlignmentGeometry get alignment => isSelf ? Alignment.centerRight : Alignment.centerLeft;
+  AlignmentGeometry get alignment =>
+      isSelf ? Alignment.centerRight : Alignment.centerLeft;
 
   @override
   Widget build(BuildContext context) {
@@ -353,6 +357,21 @@ class _KeyboardInsetsHandler extends StatelessWidget {
       );
 }
 
+class _ListInsetsHandler extends StatelessWidget {
+  final Widget child;
+
+  const _ListInsetsHandler({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: MediaQuery.of(context).viewInsets,
+        child: child,
+      );
+}
+
 class _InputBar extends StatefulWidget {
   const _InputBar({Key? key}) : super(key: key);
 
@@ -399,15 +418,20 @@ class _InputBarState extends State<_InputBar> {
                   suffixIcon: Padding(
                     padding: const EdgeInsets.all(3) * context.sc,
                     child: _SendButton(
-                      onPressed: () => MessageScreen.send(
-                        context,
-                        message: Message(
-                          content: _controller.text,
-                        ),
-                      ),
+                      onPressed: () {
+                        MessageScreen.send(
+                          context,
+                          message: Message(
+                            content: _controller.text,
+                          ),
+                        );
+                        _controller.clear();
+                      },
                     ),
                   ),
-                  contentPadding: const EdgeInsets.only(left: 16, bottom: 14, top: 14, right: 8) * context.sc,
+                  contentPadding: const EdgeInsets.only(
+                          left: 16, bottom: 14, top: 14, right: 8) *
+                      context.sc,
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Color.fromRGBO(90, 77, 135, 1),
@@ -452,7 +476,8 @@ class _AttachButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(16) * context.sc,
             ),
           ),
-          padding: const MaterialStatePropertyAll<EdgeInsets>(EdgeInsets.all(0)),
+          padding:
+              const MaterialStatePropertyAll<EdgeInsets>(EdgeInsets.all(0)),
         ),
         onPressed: onPressed,
         child: Icon(
@@ -479,13 +504,15 @@ class _SendButton extends StatelessWidget {
       aspectRatio: 1,
       child: OutlinedButton(
         style: ButtonStyle(
-          backgroundColor: const MaterialStatePropertyAll<Color>(BaseColors.yellow),
+          backgroundColor:
+              const MaterialStatePropertyAll<Color>(BaseColors.yellow),
           shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(13) * context.sc,
             ),
           ),
-          padding: const MaterialStatePropertyAll<EdgeInsets>(EdgeInsets.all(0)),
+          padding:
+              const MaterialStatePropertyAll<EdgeInsets>(EdgeInsets.all(0)),
         ),
         onPressed: onPressed,
         child: Icon(

@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
                 data: MediaQuery.of(context).copyWith(
                   textScaleFactor: context.sc,
                 ),
-                child: HomeScreen(),
+                child:const HomeScreen(),
               ),
             ),
           ),
