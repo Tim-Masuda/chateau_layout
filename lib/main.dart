@@ -1,5 +1,5 @@
 import 'package:chateau_mobile_homescreen/scale.dart';
-import 'package:chateau_mobile_homescreen/screens/home_screen.dart';
+import 'package:chateau_mobile_homescreen/screens/search_screen.dart';
 import 'package:chateau_mobile_homescreen/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
                 data: MediaQuery.of(context).copyWith(
                   textScaleFactor: context.sc,
                 ),
-                child:const HomeScreen(),
+                child:const SearchScreen(),
               ),
             ),
           ),

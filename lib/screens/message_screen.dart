@@ -37,7 +37,7 @@ class _MessageScreenState extends State<MessageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
+      extendBody:  true,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         bottomOpacity: 0.0,
@@ -66,14 +66,14 @@ class _MessageScreenState extends State<MessageScreen> {
           )
         ],
       ),
-      body: _MessageBackground(
-        child: MessageList(
-          messages: _messages,
+      body: SafeArea(
+        child: _MessageBackground(
+          child: MessageList(
+            messages: _messages,
+          ),
         ),
       ),
-      bottomNavigationBar: const _KeyboardInsetsHandler(
-        child: _InputBar(),
-      ),
+      bottomNavigationBar: _KeyboardInsetsHandler(child: _InputBar()),
     );
   }
 }
@@ -123,7 +123,6 @@ class _MessageBackground extends StatelessWidget {
   final Widget child;
 
   const _MessageBackground({
-    super.key,
     required this.child,
   });
 
@@ -155,6 +154,7 @@ class _MessageBackground extends StatelessWidget {
   }
 }
 
+
 class MessageList extends StatefulWidget {
   final List<Message> messages;
 
@@ -167,16 +167,25 @@ class MessageList extends StatefulWidget {
   State<MessageList> createState() => _MessageListState();
 }
 
-extension on ScrollPosition {
-  bool get atBottomEdge => pixels == maxScrollExtent;
-}
+extension on ScrollPosition {}
 
 class _MessageListState extends State<MessageList> {
   final _scrollController = ScrollController();
 
+  void didChangeDependencies() {
+    if (MediaQuery.of(context).viewInsets.bottom > 0) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
   @override
   void didUpdateWidget(covariant MessageList oldWidget) {
     super.didUpdateWidget(oldWidget);
+
     if (widget.messages.length <= oldWidget.messages.length) return;
 
     final position = _scrollController.position;
@@ -188,7 +197,7 @@ class _MessageListState extends State<MessageList> {
         _scrollController.position.maxScrollExtent - 200) {
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
-        duration: Duration(milliseconds: 250),
+        duration: const Duration(milliseconds: 250),
         curve: Curves.easeOut,
       );
     }
@@ -196,35 +205,33 @@ class _MessageListState extends State<MessageList> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: ListView(
-        controller: _scrollController,
-        children: [
-          SizedBox(
-            height: 16 * context.sc,
-          ),
-          const _DateLabel(
-            lable: '6 October ',
-          ),
-          SizedBox(
-            height: 16 * context.sc,
-          ),
-          ...widget.messages
-              .map((e) => _MessageTile(message: e))
-              .expand((element) => [
-                    element,
-                    SizedBox(
-                      height: 12 * context.sc,
-                    )
-                  ]),
-          SizedBox(
-            height: 60 * context.sc,
-          ),
-          Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom))
-        ],
-      ),
+    return ListView(
+      controller: _scrollController,
+      children: [
+        SizedBox(
+          height: 16 * context.sc,
+        ),
+        const _DateLabel(
+          lable: '6 October ',
+        ),
+        SizedBox(
+          height: 16 * context.sc,
+        ),
+        ...widget.messages
+            .map((e) => _MessageTile(message: e))
+            .expand((element) => [
+                  element,
+                  SizedBox(
+                    height: 12 * context.sc,
+                  )
+                ]),
+        SizedBox(
+          height: 60 * context.sc,
+        ),
+        Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom))
+      ],
     );
   }
 }
@@ -346,21 +353,6 @@ class _KeyboardInsetsHandler extends StatelessWidget {
   final Widget child;
 
   const _KeyboardInsetsHandler({
-    Key? key,
-    required this.child,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) => Padding(
-        padding: MediaQuery.of(context).viewInsets,
-        child: child,
-      );
-}
-
-class _ListInsetsHandler extends StatelessWidget {
-  final Widget child;
-
-  const _ListInsetsHandler({
     Key? key,
     required this.child,
   }) : super(key: key);

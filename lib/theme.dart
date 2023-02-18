@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 abstract class BaseColors {
-  static const secondary = Color.fromRGBO(51, 28, 127, 1);
+  static const secondary = Color.fromRGBO(51, 28, 124, 1);
   static const purple = Color.fromRGBO(62, 40, 136, 1);
   static const purpleDark = Color.fromRGBO(39, 30, 71, 1);
   static const textLigth = Color.fromARGB(255, 255, 255, 255);
