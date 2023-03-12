@@ -18,6 +18,13 @@ class Avatar extends StatelessWidget {
   })  : radius = 16,
         super(key: key);
 
+  const Avatar.bigSmall({
+    Key? key,
+    required this.url,
+    this.isOnline = false,
+  })  : radius = 18,
+        super(key: key);
+
   const Avatar.medium({
     Key? key,
     required this.url,

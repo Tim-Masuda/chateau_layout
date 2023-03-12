@@ -154,7 +154,6 @@ class _MessageBackground extends StatelessWidget {
   }
 }
 
-
 class MessageList extends StatefulWidget {
   final List<Message> messages;
 

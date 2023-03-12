@@ -1,6 +1,3 @@
-import 'dart:html';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chateau_mobile_homescreen/chateau_icons.dart';
 import 'package:chateau_mobile_homescreen/models/re%D1%81ent_slider_data.dart';
 import 'package:chateau_mobile_homescreen/scale.dart';
@@ -8,18 +5,171 @@ import 'package:chateau_mobile_homescreen/theme.dart';
 import 'package:chateau_mobile_homescreen/widgets/avatar.dart';
 import 'package:flutter/material.dart';
 
+var listUserRecent = [
+  const RecentSliderDate(
+    name: "Bob",
+    avatar:
+        'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+    status: 'last seen yesterday',
+  ),
+  const RecentSliderDate(
+    name: "Bob",
+    avatar:
+        'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+    status: 'last seen yesterday',
+  ),
+  const RecentSliderDate(
+    name: "Bob",
+    avatar:
+        'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+    status: 'last seen yesterday',
+  ),
+  const RecentSliderDate(
+    name: "Bob",
+    avatar:
+        'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+    status: 'last seen yesterday',
+  ),
+  const RecentSliderDate(
+    name: "Bob",
+    avatar:
+        'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+    status: 'last seen yesterday',
+  ),
+];
+
+var listUserSearchOne = [
+  const RecentSliderDate(
+      name: "Bob",
+      avatar:
+          'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+      status: 'last seen yesterday'),
+  const RecentSliderDate(
+      name: "Bob",
+      avatar:
+          'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+      status: 'last seen yesterday'),
+  const RecentSliderDate(
+      name: "Bob",
+      avatar:
+          'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+      status: 'last seen yesterday'),
+];
+
 class SearchScreen extends StatelessWidget {
   const SearchScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 81,
-          backgroundColor: BaseColors.secondary,
-          title: SafeArea(child: _InputBarState()),
-        ),
-        body: _RecentSlider());
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            toolbarHeight: 76 * context.sc,
+            backgroundColor: BaseColors.secondary,
+            title: SafeArea(child: _InputBarState()),
+          ),
+          // -----ПЕРВОЕ СОСТОЯНИЕ-----
+          const SliverToBoxAdapter(
+            child: RecentSlider(),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                SizedBox(
+                  height: 18 * context.sc,
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(left: 17),
+                  child: Text(
+                    'Recent',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20 * context.sc,
+                ),
+                ...listUserRecent
+                    .map((e) => RecentStateWidget(recentSliderData: e))
+              ],
+            ),
+          ),
+
+          // -----ПЕРВОЕ СОСТОЯНИЕ-----
+          // SliverList(
+          //   delegate: SliverChildListDelegate(
+          //     [
+          //       SizedBox(
+          //         height: 10 * context.sc,
+          //       ),
+          //       const RecentBlocTwo(
+          //         recentSliderData: RecentSliderDate(
+          //             name: "Bob",
+          //             avatar:
+          //                 'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+          //             status: 'last seen yesterday'),
+          //       ),
+          //       const RecentBlocTwo(
+          //         recentSliderData: RecentSliderDate(
+          //             name: "Bob",
+          //             avatar:
+          //                 'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+          //             status: 'last seen yesterday'),
+          //       ),
+          //       const RecentBlocTwo(
+          //         recentSliderData: RecentSliderDate(
+          //             name: "Bob",
+          //             avatar:
+          //                 'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+          //             status: 'last seen yesterday'),
+          //       ),
+          //       SizedBox(
+          //         height: 13 * context.sc,
+          //       ),
+          //       const Padding(
+          //         padding: EdgeInsets.only(left: 17),
+          //         child: Text(
+          //           'Global search',
+          //           style: TextStyle(
+          //             fontSize: 18,
+          //             fontWeight: FontWeight.w500,
+          //           ),
+          //         ),
+          //       ),
+          //       SizedBox(
+          //         height: 13 * context.sc,
+          //       ),
+          //       const RecentBlocTwo(
+          //         recentSliderData: RecentSliderDate(
+          //             name: "Bob",
+          //             avatar:
+          //                 'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+          //             status: '@crowncrown'),
+          //       ),
+          //       const RecentBlocTwo(
+          //         recentSliderData: RecentSliderDate(
+          //             name: "Bob",
+          //             avatar:
+          //                 'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+          //             status: '@crowncrown'),
+          //       ),
+          //       const RecentBlocTwo(
+          //         recentSliderData: RecentSliderDate(
+          //             name: "Bob",
+          //             avatar:
+          //                 'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+          //             status: '@crowncrown'),
+          //       ),
+
+          //     ],
+          //   ),
+          // ),
+        ],
+      ),
+    );
   }
 }
 
@@ -135,43 +285,40 @@ class _ClearButton extends StatelessWidget {
   }
 }
 
-class _RecentSlider extends StatelessWidget {
-  const _RecentSlider({Key? key}) : super(key: key);
+class RecentSlider extends StatelessWidget {
+  const RecentSlider({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: 90,
-                    child: _RecentSliderCard(
-                      recentSliderData: RecentSliderDate(
-                        name: "Ivan",
-                        avatar: 'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          )
-        ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 6),
+      child: SizedBox(
+        height: 100 * context.sc,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: 61 * context.sc,
+                child: const RecentSliderCard(
+                  recentSliderData: RecentSliderDate(
+                      name: "Bob",
+                      avatar:
+                          'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+                      status: 'last seen yesterday'),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
 }
 
-class _RecentSliderCard extends StatelessWidget {
-  const _RecentSliderCard({
+class RecentSliderCard extends StatelessWidget {
+  const RecentSliderCard({
     Key? key,
     required this.recentSliderData,
   }) : super(key: key);
@@ -185,13 +332,12 @@ class _RecentSliderCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Avatar.large(
-                isOnline: false,
-                url:
-                    recentSliderData.avatar,
-              ),
+          isOnline: false,
+          url: recentSliderData.avatar,
+        ),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(top: 16.0),
+            padding: const EdgeInsets.only(top: 8.0),
             child: Text(
               recentSliderData.name,
               overflow: TextOverflow.ellipsis,
@@ -204,6 +350,171 @@ class _RecentSliderCard extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class RecentStateWidget extends StatelessWidget {
+  const RecentStateWidget({
+    Key? key,
+    required this.recentSliderData,
+  }) : super(key: key);
+
+  final RecentSliderDate recentSliderData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 17),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Color.fromRGBO(22, 14, 49, 1),
+          borderRadius: BorderRadius.all(Radius.circular(0)),
+        ),
+        padding: const EdgeInsets.symmetric(
+          vertical: 10,
+        ),
+        child: InkWell(
+          onTap: () {},
+          child: SizedBox(
+            height: 40 * context.sc,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Avatar.bigSmall(
+                    isOnline: false,
+                    url: recentSliderData.avatar,
+                  ),
+                  SizedBox(
+                    width: 16 * context.sc,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          recentSliderData.name,
+                          style: const TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 3 * context.sc,
+                        ),
+                        const Text(
+                          'last seen yesterday',
+                          style: TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            fontSize: 11,
+                            color: BaseColors.textDark,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 20,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SerchStateWidget extends StatelessWidget {
+  const SerchStateWidget({
+    Key? key,
+    required this.recentSliderData,
+  }) : super(key: key);
+
+  final RecentSliderDate recentSliderData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        vertical: 8,
+      ),
+      child: InkWell(
+        onTap: () {},
+        child: SizedBox(
+          height: 40 * context.sc,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Avatar.bigSmall(
+                  isOnline: false,
+                  url: recentSliderData.avatar,
+                ),
+                SizedBox(
+                  width: 16 * context.sc,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        recentSliderData.name,
+                        style: const TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 3 * context.sc,
+                      ),
+                      Text(
+                        recentSliderData.status,
+                        style: const TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                          fontSize: 11,
+                          color: BaseColors.textDark,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
