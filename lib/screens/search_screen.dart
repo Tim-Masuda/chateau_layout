@@ -9,31 +9,31 @@ var listUserRecent = [
   const RecentSliderDate(
     name: "Bob",
     avatar:
-        'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+        'https://images.wallpapershq.com/wallpapers/1284/wallpaper_1284_1920x1080.jpg',
     status: 'last seen yesterday',
   ),
   const RecentSliderDate(
     name: "Bob",
     avatar:
-        'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+        'https://images.wallpapershq.com/wallpapers/1284/wallpaper_1284_1920x1080.jpg',
     status: 'last seen yesterday',
   ),
   const RecentSliderDate(
     name: "Bob",
     avatar:
-        'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+        'https://images.wallpapershq.com/wallpapers/1284/wallpaper_1284_1920x1080.jpg',
     status: 'last seen yesterday',
   ),
   const RecentSliderDate(
     name: "Bob",
     avatar:
-        'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+        'https://images.wallpapershq.com/wallpapers/1284/wallpaper_1284_1920x1080.jpg',
     status: 'last seen yesterday',
   ),
   const RecentSliderDate(
     name: "Bob",
     avatar:
-        'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+        'https://images.wallpapershq.com/wallpapers/1284/wallpaper_1284_1920x1080.jpg',
     status: 'last seen yesterday',
   ),
 ];
@@ -42,17 +42,17 @@ var listUserSearchOne = [
   const RecentSliderDate(
       name: "Bob",
       avatar:
-          'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+          'https://images.wallpapershq.com/wallpapers/1284/wallpaper_1284_1920x1080.jpg',
       status: 'last seen yesterday'),
   const RecentSliderDate(
       name: "Bob",
       avatar:
-          'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+          'https://images.wallpapershq.com/wallpapers/1284/wallpaper_1284_1920x1080.jpg',
       status: 'last seen yesterday'),
   const RecentSliderDate(
       name: "Bob",
       avatar:
-          'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+          'https://images.wallpapershq.com/wallpapers/1284/wallpaper_1284_1920x1080.jpg',
       status: 'last seen yesterday'),
 ];
 
@@ -305,7 +305,7 @@ class RecentSlider extends StatelessWidget {
                   recentSliderData: RecentSliderDate(
                       name: "Bob",
                       avatar:
-                          'https://kuban24.tv/wp-content/uploads/2019/09/3eadfdd8fd4fe3b999fbb77af980b6f1.jpg',
+                          'https://images.wallpapershq.com/wallpapers/1284/wallpaper_1284_1920x1080.jpg',
                       status: 'last seen yesterday'),
                 ),
               ),
@@ -368,7 +368,7 @@ class RecentStateWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 17),
       child: Container(
         decoration: const BoxDecoration(
-          color: Color.fromRGBO(22, 14, 49, 1),
+          color: Color.fromRGBO(14, 6, 45, 0.733),
           borderRadius: BorderRadius.all(Radius.circular(0)),
         ),
         padding: const EdgeInsets.symmetric(

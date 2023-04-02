@@ -23,8 +23,6 @@ class ChatPage extends StatelessWidget {
   }
 
   Widget _delegate(BuildContext context, int index) {
-    final Faker faker = Faker();
-
     return MessageBloc(
       messageData: MessageData(
         senderName: faker.person.name(),
@@ -208,4 +206,3 @@ class _AnimatedRoundState extends State<AnimatedRound>
         ),
       );
 }
-// tttt

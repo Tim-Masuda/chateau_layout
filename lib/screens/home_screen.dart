@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: ValueListenableBuilder(
         valueListenable: pageIndex,
         builder: (BuildContext context, int value, _) {
-          return pages[value];
+          return pages[2];
         },
       ),
     );
