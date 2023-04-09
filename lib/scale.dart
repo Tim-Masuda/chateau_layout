@@ -81,5 +81,5 @@ double get _scale => (window.physicalSize.width / window.devicePixelRatio) / 360
 double __scale = _scale;
 
 extension ScaleX on BuildContext {
-  double get sc => kIsWeb ? _ScaleScope.of(this).scale : __scale;
+  double get sc => 1.14;
 }

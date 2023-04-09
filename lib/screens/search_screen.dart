@@ -5,7 +5,7 @@ import 'package:chateau_mobile_homescreen/theme.dart';
 import 'package:chateau_mobile_homescreen/widgets/avatar.dart';
 import 'package:flutter/material.dart';
 
-var listUserRecent = [
+final List listUserRecent = [
   const RecentSliderDate(
     name: "Bob",
     avatar:
@@ -38,7 +38,7 @@ var listUserRecent = [
   ),
 ];
 
-var listUserSearchOne = [
+final List listUserSearchOne = [
   const RecentSliderDate(
       name: "Bob",
       avatar:
@@ -518,3 +518,5 @@ class SerchStateWidget extends StatelessWidget {
     );
   }
 }
+
+

@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-
-@immutable
 class RecentSliderDate {
   const RecentSliderDate({
     required this.name,
